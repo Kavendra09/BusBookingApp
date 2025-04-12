@@ -2,6 +2,12 @@ import {View, Text, Alert, TouchableOpacity, Image} from 'react-native';
 import React, {useState} from 'react';
 import {navigate} from '../../utils/NavigationUtils';
 import LinearGradient from 'react-native-linear-gradient';
+import {
+  CalendarDaysIcon,
+  MagnifyingGlassCircleIcon,
+  MagnifyingGlassIcon,
+} from 'react-native-heroicons/solid';
+import DatePickerModal from '../ui/DatePickerModal';
 
 const Search = () => {
   const [from, setFrom] = useState<string | null>(null);
@@ -90,9 +96,70 @@ const Search = () => {
                 {to || 'To'}
               </Text>
             </TouchableOpacity>
+            <View className="flex-row items-center p-2 justify-between">
+              <View className="flex-row items-center">
+                <TouchableOpacity
+                  className="p-2 mr-2 rounded-lg bg-secondary"
+                  onPress={() => {
+                    const tomorrow = new Date();
+                    tomorrow.setDate(tomorrow.getDate());
+                    setDate(tomorrow);
+                  }}>
+                  <Text className="font-bold text-sm font-okra "> Today </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  className="p-2 rounded-lg bg-secondary"
+                  onPress={() => {
+                    const tomorrow = new Date();
+                    tomorrow.setDate(tomorrow.getDate() + 1);
+                    setDate(tomorrow);
+                  }}>
+                  <Text className="font-bold text-sm font-okra ">
+                    {' '}
+                    Tomorrow{' '}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <TouchableOpacity
+                className="flex-row items-center"
+                onPress={() => {
+                  setShowDatePicker(true);
+                }}>
+                <View className="mr-3 ">
+                  <Text className="text-sm font-normal font-okra text-gray-500">
+                    Date of Journey
+                  </Text>
+                  <Text className="text-md font-bold font-okra text-gray-900">
+                    {date?.toDateString()}
+                  </Text>
+                </View>
+                <CalendarDaysIcon color="#000" size={25} />
+              </TouchableOpacity>
+            </View>
           </View>
+          <TouchableOpacity
+            onPress={handelSearchBuses}
+            className="bg-tertiary p-3 rounded-xl my-2 flex-row items-center justify-center gap-2">
+            <MagnifyingGlassIcon color={'#fff'} size={22} />
+            <Text className="font-okra font-bold text-white text-lg">
+              Search Buses
+            </Text>
+          </TouchableOpacity>
+          <Image
+            source={require('../../assets/images/adbanner.jpeg')}
+            className="h-40 rounded-lg my-4 w-full"
+          />
         </View>
       </LinearGradient>
+      {showDatePicker && (
+        <DatePickerModal 
+        visible={showDatePicker}
+        onClose={() => setShowDatePicker(false)}
+        onConfirm={setDate}
+        selectedDate={date}
+        />
+      )}
     </View>
   );
 };
