@@ -20,8 +20,9 @@ export const setRefreshToken = (token: string) => {
 }
 
 export const getRefreshToken = () => {
-    storage.getString('refreshToken')
-}
+    return storage.getString('refreshToken');
+};
+
 
 export const renoveRefreshToken = () => {
     storage.delete('refreshToken')

@@ -12,8 +12,8 @@ interface DecodedToken {
 const SplashScreen = () => {
   const tokenCheck = async () => {
     try {
-      const accessToken = getAccessToken();
-      const refreshToken = getRefreshToken();
+      const accessToken =  getAccessToken();
+      const refreshToken =  getRefreshToken()  as string ;
 
       if (accessToken) {
         if (!refreshToken) {

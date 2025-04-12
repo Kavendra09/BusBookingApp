@@ -15,10 +15,11 @@ export const loginWithGoogle = async (idToken: string) => {
 
   setAccessToken(data?.accessToken);
   setRefreshToken(data?.refreshToken);
+  
   return data?.user;
 };
 
-export const longout = async () => {
+export const logout = async () => {
   removeAccessToken();
   renoveRefreshToken();
   resetAndNavigate('LoginScreen');
@@ -27,6 +28,8 @@ export const longout = async () => {
 export const refresh_token = async (): Promise<boolean> => {
   try {
     const refreshToken = getRefreshToken();
+    console.log(refreshToken);
+    
 
     if (!refreshToken) {
       throw new Error(' No refresh token is found');
@@ -45,7 +48,7 @@ export const refresh_token = async (): Promise<boolean> => {
 
   } catch (error) {
     console.error('token refresh failed: ', error);
-    longout();
+    logout();
     return false;
   }
 };
