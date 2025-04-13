@@ -4,10 +4,10 @@ import {navigate} from '../../utils/NavigationUtils';
 import LinearGradient from 'react-native-linear-gradient';
 import {
   CalendarDaysIcon,
-  MagnifyingGlassCircleIcon,
   MagnifyingGlassIcon,
 } from 'react-native-heroicons/solid';
 import DatePickerModal from '../ui/DatePickerModal';
+import LocationPickerModel from '../ui/LocationPickerModel';
 
 const Search = () => {
   const [from, setFrom] = useState<string | null>(null);
@@ -72,7 +72,7 @@ const Search = () => {
               className="p-4 flex-row gap-4 items-center"
               onPress={() => {
                 setLocationType('from');
-                setShowDatePicker(true);
+                setShowLocationPicker(true);
               }}>
               <Image
                 source={require('../../assets/images/bus.png')}
@@ -86,7 +86,7 @@ const Search = () => {
               className="p-4 border-t-[1px] border-b-[1px] rounded-md border-gray-400 flex-row gap-4 items-center"
               onPress={() => {
                 setLocationType('to');
-                setShowDatePicker(true);
+                setShowLocationPicker(true);
               }}>
               <Image
                 source={require('../../assets/images/bus.png')}
@@ -153,11 +153,21 @@ const Search = () => {
         </View>
       </LinearGradient>
       {showDatePicker && (
-        <DatePickerModal 
-        visible={showDatePicker}
-        onClose={() => setShowDatePicker(false)}
-        onConfirm={setDate}
-        selectedDate={date}
+        <DatePickerModal
+          visible={showDatePicker}
+          onClose={() => setShowDatePicker(false)}
+          onConfirm={setDate}
+          selectedDate={date}
+        />
+      )}
+
+      {showLocationPicker && (
+        <LocationPickerModel
+          visible={showLocationPicker}
+          onClose={() => setShowLocationPicker(false)}
+          onSelect={handelLocationSet}
+          type={locationType}
+          fromLocation={from || undefined}
         />
       )}
     </View>
